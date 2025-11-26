@@ -813,16 +813,29 @@
         
         /* === NEW: CSS for Date/Time Grouping (Desktop & General) === */
         #page-pos #add-to-cart-form .date-time-group {
-            display: flex;
-            gap: 3px; /* Spacing between date and time inputs */
-            grid-column: 2 / -1; /* Ensures it spans the full content column on desktop */
+            display: flex !important; /* บังคับใช้ Flexbox */
+            flex-direction: row !important; /* เรียงแนวนอนซ้ายไปขวา */
+            align-items: center !important; /* จัดกึ่งกลางแนวตั้ง */
+            gap: 5px !important; /* ระยะห่างระหว่างช่องวันที่กับเวลา */
+            grid-column: 2 / -1; /* ครอบคลุมพื้นที่คอลัมน์ขวา */
+            width: 100% !important; /* กว้างเต็มพื้นที่ */
         }
         #page-pos #add-to-cart-form .date-time-group input {
-            flex-grow: 1;
-            min-width: 0;
-            font-size: clamp(0.55rem, 1.0vw, 0.9em); 
-            padding: 6px 7px; /* ลด padding */
+            flex: 1 1 0 !important; /* แบ่งพื้นที่เท่ากัน 50/50 และย่อขยายได้ */
+            width: 0 !important; /* แก้บั๊ก Flexbox ไม่ยอมหดในบาง Browser */
+            min-width: 0 !important; /* อนุญาตให้หดเล็กสุดได้ */
+            font-size: clamp(0.75rem, 1vw, 0.9em) !important; /* ปรับขนาดตัวอักษร */
+            padding: 0 5px !important; /* ระยะห่างภายใน */
+            text-align: center !important; /* จัดตัวหนังสือกลางช่อง */
+            
+            /* บังคับโครงสร้างกล่อง */
+            height: 38px !important;  /* บังคับความสูงให้เท่ากันเป๊ะ */
+            line-height: normal !important;
+            margin: 0 !important; /* ลบระยะห่างภายนอกที่ไม่จำเป็น */
+            box-sizing: border-box !important; /* รวมขอบในความกว้าง/สูง */
         }
+
+
         /* === END NEW === */
 
 /* === START: ปรับปรุงฟอร์มรหัสผ่านสำรอง (User Request) === */
@@ -1137,14 +1150,29 @@
             }
             
             /* --- NEW: Mobile adjustment for Date/Time Grouping --- */
-            #page-pos #add-to-cart-form .date-time-group {
-                grid-column: 2 / -1; /* Make sure the date/time group spans the second column */
-                gap: 3px; /* ลด gap */
-            }
-            #page-pos #add-to-cart-form .date-time-group input {
-                padding: 6px 7px; /* ลด padding */
-                font-size: 0.75em; /* ลด font size */
-            }
+        #page-pos #add-to-cart-form .date-time-group {
+            display: flex !important; /* บังคับใช้ Flexbox */
+            flex-direction: row !important; /* เรียงแนวนอนซ้ายไปขวา */
+            align-items: center !important; /* จัดกึ่งกลางแนวตั้ง */
+            gap: 5px !important; /* ระยะห่างระหว่างช่องวันที่กับเวลา */
+            grid-column: 2 / -1; /* ครอบคลุมพื้นที่คอลัมน์ขวา */
+            width: 100% !important; /* กว้างเต็มพื้นที่ */
+        }
+        #page-pos #add-to-cart-form .date-time-group input {
+            flex: 1 1 0 !important; /* แบ่งพื้นที่เท่ากัน 50/50 และย่อขยายได้ */
+            width: 0 !important; /* แก้บั๊ก Flexbox ไม่ยอมหดในบาง Browser */
+            min-width: 0 !important; /* อนุญาตให้หดเล็กสุดได้ */
+            font-size: clamp(0.75rem, 1vw, 0.9em) !important; /* ปรับขนาดตัวอักษร */
+            padding: 0 5px !important; /* ระยะห่างภายใน */
+            text-align: center !important; /* จัดตัวหนังสือกลางช่อง */
+            
+            /* บังคับโครงสร้างกล่อง */
+            height: 38px !important;  /* บังคับความสูงให้เท่ากันเป๊ะ */
+            line-height: normal !important;
+            margin: 0 !important; /* ลบระยะห่างภายนอกที่ไม่จำเป็น */
+            box-sizing: border-box !important; /* รวมขอบในความกว้าง/สูง */
+        }
+
             /* --- END NEW --- */
 
             /* --- Cart Summary Compacting Rules --- */
@@ -2087,18 +2115,54 @@ input[type="date"] {
 #report-filter-form select {
     width: 100% !important;
 }
+/* === FIXED: PRODUCT + QUANTITY ONE-LINE GROUP === */
+#page-pos #add-to-cart-form .product-quantity-group {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 3px !important;
+    width: 100% !important;
+
+    /* ❗ สำคัญที่สุด: บังคับให้กลุ่มนี้กินทั้งแถว ไม่ถูกบีบโดย Grid */
+    grid-column: 1 / -1 !important;
+
+    /* กันไม่ให้แตกบรรทัดเด็ดขาด */
+    flex-wrap: nowrap !important;
+}
+
+/* ช่อง select + quantity */
+#page-pos #add-to-cart-form .product-quantity-group select,
+#page-pos #add-to-cart-form .product-quantity-group input {
+    flex: 1 1 0 !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    font-size: clamp(0.75rem, 1vw, 0.9em) !important;
+    padding: 0 6px !important;
+    text-align: center !important;
+    height: 38px !important;
+    line-height: normal !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+}
+
+/* กำหนดสัดส่วน: 70% + 30% */
+#page-pos #add-to-cart-form .product-quantity-group select {
+    flex: 8.5 !important;
+}
+
+#page-pos #add-to-cart-form .product-quantity-group input {
+    flex: 1.5 !important;
+}
+
+/* === MOBILE === */
 @media (max-width: 768px) {
-        #page-pos #add-to-cart-form .date-time-group input {
-            flex: 1 1 0 !important; /* แบ่งพื้นที่เท่ากัน 50/50 และย่อขยายได้ */
-            width: 0 !important; /* แก้บั๊ก Flexbox ไม่ยอมหดในบาง Browser */
-            min-width: 0 !important; /* อนุญาตให้หดเล็กสุดได้ */
-            font-size: clamp(0.75rem, 1vw, 0.9em) !important; /* ปรับขนาดตัวอักษร */
-            padding: 0 5px !important; /* ระยะห่างภายใน */
-            text-align: center !important; /* จัดตัวหนังสือกลางช่อง */
-            
-            /* บังคับโครงสร้างกล่อง */
-            height: 36px !important;  /* บังคับความสูงให้เท่ากันเป๊ะ */
-            line-height: normal !important;
-            margin: 0 !important; /* ลบระยะห่างภายนอกที่ไม่จำเป็น */
-            box-sizing: border-box !important; /* รวมขอบในความกว้าง/สูง */
-        }
+    #page-pos #add-to-cart-form .product-quantity-group {
+        gap: 2px !important;
+    }
+
+    #page-pos #add-to-cart-form .product-quantity-group select,
+    #page-pos #add-to-cart-form .product-quantity-group input {
+        height: 36px !important;
+        font-size: clamp(0.75rem, 1.5vw, 0.85em) !important;
+    }
+}
